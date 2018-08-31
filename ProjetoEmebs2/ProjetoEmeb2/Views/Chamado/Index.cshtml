@@ -1,0 +1,147 @@
+﻿@model ChamadoModel
+
+
+@{
+    ViewData["Title"] = "Index";
+    var vNome = "";
+
+    try
+    {
+        vNome = @ViewBag.ListaPesquisa.nome.ToString();
+    }
+    catch { }
+}
+
+<h2>Chamados</h2>
+
+<div class="container">
+    <form asp-controller="Chamado" asp-action="Index">
+        <div class="form-group">
+            <label>Nome Escola:</label>
+            <select asp-for="Escola_idEscola" class="form-control">
+                @{
+
+                foreach (var item in (List<EscolaModel>)ViewBag.ListaEscola)
+                {
+                    <option value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+
+            }
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Situação:</label>
+            <div class="radio"><label><input type="radio" asp-for="situacao" value="A" />Aberto</label></div>
+            <div class="radio"><label><input type="radio" asp-for="situacao" value="F" />Fechado</label></div>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo:</label>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="D" />Dados</label></div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="V" />Voz</label></div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="T" />Dados e Voz</label></div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="O" />Outros</label></div>
+        </div>
+
+        <div class="form-group">
+            <label>Protocolo:</label>
+            <input type="text" asp-for="protocolo" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Data(Inicio)</label>
+            <input type="date" asp-for="Data" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Data(Final)</label>
+            <input type="date" asp-for="DataFinal" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-block btn-success">Pesquisar</button>
+        <button type="button" class="btn btn-block btn-danger" onclick="CriarChamado()">Cadastrar Novo Chamado</button>
+
+    </form>
+
+    <br />
+</div>
+
+<table class="table table-bordered table-condensed table-striped" id="Pesquisa">
+
+    <thead class="btn-primary">
+        <tr>
+            <th>Excluir</th>
+            <th>Editar</th>
+            <th>Escola</th>
+            <th>Tipo do Chamado</th>
+            <th>Data</th>
+            <th>Atendente</th>
+            <th>Protocolo</th>
+            <th>Descrição</th>
+            <th>Situação</th>
+
+        </tr>
+    </thead>
+
+    @{
+
+        foreach (var itens in (List<ChamadoModel>)ViewBag.ListaPesquisa)
+        {
+            <tbody>
+                <tr>
+                    <td width="60"><button type="button" class="btn btn-danger" onclick="Excluir(@itens.idChamado.ToString())">Excluir</button></td>
+                    <td width="60"><button type="button" class="btn btn-warning" onclick="Editar(@itens.idChamado.ToString())">Editar</button></td>
+                    <td>@itens.nome.ToString()</td>
+                    <td>@itens.tipo.ToString().Replace("D", "Dados").Replace("V", "Voz").Replace("T", "Dados e Voz").Replace("O", "Outros")</td>
+                    <td>@itens.data.ToString()</td>
+                    <td>@itens.atendente.ToString()</td>
+                    <td>@itens.protocolo.ToString()</td>
+                    <td>@itens.descricao.ToString()</td>
+                    <td>@itens.situacao.ToString().Replace("A", "Aberto").Replace("F", "Fechado")</td>
+                </tr>
+            </tbody>
+
+
+        }
+
+    }
+
+</table>
+
+<br />
+
+
+
+<br />
+
+
+<script>
+
+    function MostrarTodos() {
+        var x = document.getElementById("Todos");
+        
+
+        if (x.style.display === "block") {
+            x.style.display = "none"
+
+        } else { x.style.display = "block" }
+
+    }
+
+    function CriarChamado() {
+        window.location.href = "../Chamado/CriarChamado";
+
+    }
+    function Excluir(id_chamado) {
+        window.location.href = "../Chamado/ExcluirChamado/" + id_chamado;
+    }
+    function Editar(id_chamado) {
+        window.location.href = "../Chamado/CriarChamado/" + id_chamado;
+
+    }
+
+
+
+</script>
+

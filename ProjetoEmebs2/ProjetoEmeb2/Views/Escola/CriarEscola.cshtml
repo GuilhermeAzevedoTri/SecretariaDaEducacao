@@ -1,0 +1,140 @@
+﻿@model EscolaModel
+
+@{
+    var vNome = "";
+    var vEndereco = "";
+    var vBairro = "";
+    var vNumero = "";
+    var vCep = "";
+    var vId = 0;
+    var vCodAgua = "";
+    var vCodLuz = "";
+    var vTelefone = "";
+    var vTelefone2 = "";
+    var vIP = "";
+    var vEmail = "";
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registro.idEscola.ToString());
+        vNome = @ViewBag.Registro.Nome.ToString();
+        vEndereco = @ViewBag.Registro.Endereco.ToString();
+        vBairro = @ViewBag.Registro.Bairro.ToString();
+        vNumero = @ViewBag.Registro.Numero.ToString();
+        vCep = @ViewBag.Registro.Cep.ToString();
+        vCodAgua = @ViewBag.Registro.CodAgua.ToString();
+        vCodLuz = @ViewBag.Registro.CodLuz.ToString();
+        vTelefone = @ViewBag.Registro.Telefone.ToString();
+        vTelefone2 = @ViewBag.Registro.Telefone2.ToString();
+        vIP = @ViewBag.Registro.IP.ToString();
+        vEmail = @ViewBag.Registro.Email.ToString();
+
+    }
+    catch { }
+
+}
+
+<script src="~/js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="~/js/jquery.maskedinput.js" type="text/javascript"></script>
+
+<script>
+    jQuery(function ($) {
+        $("#CEP").mask("99999-999", { placeholder: "#####-###" }, { maxlength: "9" });
+        $("#TELEFONE").mask("9999-9999", { placeholder: "####-####" }, { maxlength: "9" });
+        $("#TELEFONE2").mask("9999-9999", { placeholder: "####-####" }, { maxlength: "9" });
+
+
+    });
+</script>
+
+
+<div class="container" style="background-color:rgba(239, 239, 239, 0.95 )" border-radius:10px; padding:20px; width:500px;">
+    <h2>Cadastrar Escola</h2>
+    <br />
+
+    <form asp-controller="Escola" asp-action="CriarEscola">
+        <input type="hidden" asp-for="idEscola" value="@vId" />
+
+        <div class="col-md-12">
+            <label>Nome Escola:</label>
+            <input type="text" class="form-control" asp-for="Nome" value="@vNome">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label>Endereço:</label>
+            <input type="text" class="form-control" asp-for="Endereco" value="@vEndereco">
+            <span asp-validation-for="Endereco" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-12">
+            <label>Bairro:</label>
+            <input type="text" class="form-control" asp-for="Bairro" value=" @vBairro">
+            <span asp-validation-for="Bairro" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label>CEP:</label>
+            <input type="text" class="form-control" name="CEP" id="CEP" asp-for="Cep" value="@vCep">
+            <span asp-validation-for="Cep" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-2">
+            <label>N°:</label>
+            <input type="text" class="form-control" placeholder="#####" maxlength=5 asp-for="Numero" value="@vNumero">
+            <span asp-validation-for="Numero" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label>Código Agua:</label>
+            <input type="text" class=" form-control m-input m-datepicker" placeholder="########/##" maxlength="11" asp-for="CodAgua" value="@vCodAgua" />
+
+        </div>
+
+        <div class="col-md-6">
+            <label>Código Luz:</label>
+            <input type="text" class=" form-control m-input m-datepicker" placeholder="########" maxlength="8" asp-for="CodLuz" value="@vCodLuz" />
+            <br />
+
+        </div>
+
+        <div class="col-lg-12">
+            <br />
+            <label><strong>CONTATO:</strong></label>
+        </div>
+
+        <div class="col-md-6">
+            <label>Telefone:</label>
+            <input type="text" class=" form-control" name="TELEFONE" id="TELEFONE" asp-for="Telefone" value="@vTelefone" />
+
+        </div>
+
+        <div class="col-md-6">
+            <label>Telefone 2:</label>
+            <input type="text" class=" form-control" name="TELEFONE2" id="TELEFONE2" asp-for="Telefone2" value="@vTelefone2" />
+
+        </div>
+
+        <div class="col-md-12">
+            <label>IP:</label>
+            <input type="text" class=" form-control" name="IP" id="IP" placeholder="###.###.###.#" maxlength="13" asp-for="IP" value="@vIP" />
+
+        </div>
+
+        <div class="col-md-12">
+            <label>Email</label>
+            <input type="email" class=" form-control m-input m-datepicker" placeholder="nome@dominio.com" maxlength="60" asp-for="Email" value="@vEmail" />
+            <br />
+        </div>
+
+
+        <button type="submit" class="btn btn-block btn-success">Cadastrar</button>
+    </form>
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,171 @@
+﻿@model ChamadoModel
+
+@{
+
+    var vTipo = "";
+    var vSituacao = "";
+
+    var vData = "";
+
+    var vAtendente = "";
+    var vProtocolo = "";
+    var vDescricao = "";
+    var vId = 0;
+    var vEscola_idEscola = 0;
+
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registro.idChamado.ToString());
+        vTipo = @ViewBag.Registro.tipo.ToString();
+        vProtocolo = @ViewBag.Registro.protocolo.ToString();
+        vAtendente = @ViewBag.Registro.atendente.ToString();
+        vSituacao = @ViewBag.Registro.situacao.ToString();
+        vEscola_idEscola = int.Parse(ViewBag.Registro.Escola_idEscola.ToString());
+        vData = DateTime.Parse(@ViewBag.Registro.data.ToString()).ToString("yyyy-MM-dd");
+        vDescricao = @ViewBag.Registro.descricao.ToString();
+    }
+    catch { }
+}
+
+
+<div class="container" style="background-color:rgba(239, 239, 239, 0.95 )" border-radius:10px; padding:20px; width:500px;">
+    <h2 style="text-align:center;">Cadastrar Chamado</h2>
+
+    <div class="alert alert-warning">
+        <strong> Contato WCS = 3879-9400<br /></strong>
+        <strong> Contato Secretaria = 4800-7904<br /></strong>
+        <strong> Email = abel.valini@francodarocha.sp.gov.br<br /></strong>
+    </div>
+        
+    <form asp-controller="Chamado" asp-action="CriarChamado">
+        <input type="hidden" asp-for="idChamado" value="@vId" />
+
+        <div class="form-group">
+            <label>Nome Escola:</label>
+            <select asp-for="Escola_idEscola" class="form-control">
+                @{
+                    foreach (var item in (List<EscolaModel>)ViewBag.ListaEscola)
+                    {
+                        if (item.idEscola.ToString() == vEscola_idEscola.ToString())
+                        {
+                            <option selected value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="Escola_idEscola" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" class="form-control" asp-for="data" value="@vData">
+            <span asp-validation-for="data" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label> Tipo:</label>
+            <div class="radio">
+                @{
+                    if (vTipo == "D")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="D" checked>Dados</label>
+                        <label><input type="radio" asp-for="tipo" value="V" unchecked>Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="T" unchecked>Dados e Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="O" unchecked>Outros</label>
+                    }
+                    if (vTipo == "V")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="D" unchecked>Dados</label>
+                        <label><input type="radio" asp-for="tipo" value="V" checked>Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="T" unchecked>Dados e Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="O" unchecked>Outros</label>
+                    }
+
+                    if (vTipo == "T")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="D" unchecked>Dados</label>
+                        <label><input type="radio" asp-for="tipo" value="V" unchecked>Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="T" checked>Dados e Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="O" unchecked>Outros</label>
+
+                    }
+                    if (vTipo == "O")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="D" unchecked>Dados</label>
+                        <label><input type="radio" asp-for="tipo" value="V" unchecked>Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="T" unchecked>Dados e Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="O" checked>Outros</label>
+
+
+                    }
+                    if (vTipo.Length <= 0)
+                    {
+                        <label><input type="radio" asp-for="tipo" value="D" unchecked>Dados</label>
+                        <label><input type="radio" asp-for="tipo" value="V" unchecked>Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="T" unchecked>Dados e Voz</label>
+                        <label><input type="radio" asp-for="tipo" value="O" unchecked>Outros</label>
+
+
+                    }
+
+                }
+                <span asp-validation-for="tipo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Protocolo:</label>
+            <input type="text" class="form-control m-input m-datepicker" placeholder="" maxlength=8 asp-for="protocolo" value="@vProtocolo">
+            <span asp-validation-for="protocolo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Atendente:</label>
+            <input type="text" class="form-control" placeholder="" maxlength=30 asp-for="atendente" value="@vAtendente">
+            <span asp-validation-for="atendente" class="text-danger"></span>
+
+        </div>
+
+
+        <div class="form-group">
+            <label> Situcao:</label>
+            <div class="radio">
+                @{
+                    if (vSituacao == "F")
+                    {
+                        <label><input type="radio" asp-for="situacao" value="A" unchecked>Aberto</label>
+                        <label><input type="radio" asp-for="situacao" value="F" checked>Fechado</label>
+                    }
+                    else
+                    {
+                        <label><input type="radio" asp-for="situacao" value="A" checked>Aberto</label>
+                        <label><input type="radio" asp-for="situacao" value="F" unchecked>Fechado</label>
+                    }
+
+
+
+
+                }
+                <span asp-validation-for="situacao" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Histórico:</label>
+            @Html.TextArea("Descricao", vDescricao, new { @class = "form-control" })
+            <br />
+            <br />
+        </div>
+
+        <button type="submit" class="btn btn-block btn-success "><span class="glyphicon glyphicon-send"></span> Registrar</button>
+
+    </form>
+
+</div>
+

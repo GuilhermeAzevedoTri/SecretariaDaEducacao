@@ -1,0 +1,106 @@
+﻿@model ContaModel
+
+
+@{
+    var vTipo = "";
+    var vData = "";
+    var vValor = 0.0;
+    var vDescricao = "";
+    var vId = 0;
+    var vEscola_idEscola = 0;
+
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registro.idGasto.ToString());
+        vTipo = @ViewBag.Registro.tipo.ToString();
+        vData = DateTime.Parse(@ViewBag.Registro.data.ToString()).ToString("yyyy-MM-dd");
+
+        vDescricao = @ViewBag.Registro.descricao.ToString();
+        vEscola_idEscola = int.Parse(ViewBag.Registro.Escola_idEscola.ToString());
+        vValor = double.Parse(@ViewBag.Registro.Valor.ToString());
+
+    }
+    catch { }
+}
+
+
+<div class="container" style="background-color:rgba(239, 239, 239, 0.95 )" border-radius:10px; padding:20px; width:500px;">
+    <h2>Cadastrar Conta</h2>
+    <br />
+
+    <form asp-controller="Conta" asp-action="CriarConta">
+        <input type="hidden" asp-for="idGasto" value="@vId" />
+
+        <div class="form-group">
+            <label>Nome Escola:</label>
+            <select asp-for="Escola_idEscola" class="form-control">
+                @{
+                    foreach (var item in (List<EscolaModel>)ViewBag.ListaEscola)
+                    {
+                        if (item.idEscola.ToString() == vEscola_idEscola.ToString())
+                        {
+                            <option selected value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="Escola_idEscola" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" class="form-control" asp-for="data" value="@vData">
+            <span asp-validation-for="data" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label> Tipo:</label>
+            <div class="radio">
+                @{
+                    if (vTipo == "A")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="A" checked>Agua</label>
+                        <label><input type="radio" asp-for="tipo" value="L" unchecked>Luz</label>
+                    }
+                    if (vTipo == "L")
+                    {
+                        <label><input type="radio" asp-for="tipo" value="A" unchecked>Agua</label>
+                        <label><input type="radio" asp-for="tipo" value="L" checked>Luz</label>
+
+                    }
+                    if (vTipo.Length <= 0)
+                    { <label><input type="radio" asp-for="tipo" value="A" unchecked>Agua</label>
+                        <label><input type="radio" asp-for="tipo" value="L" unchecked>Luz</label>
+                    }
+                }
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Valor:</label>
+            <input type="text" class="form-control" maxlength="6" asp-for="Valor" value="@vValor">
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Descrição:</label>
+            @Html.TextArea("Descricao", vDescricao, new { @class = "form-control" })
+
+        </div>
+
+        <button type="submit" class="btn btn-block btn-success">Registrar</button>
+
+    </form>
+
+
+
+
+</div>
+

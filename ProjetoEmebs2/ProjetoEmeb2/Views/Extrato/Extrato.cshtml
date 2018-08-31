@@ -1,0 +1,99 @@
+﻿@model ExtratoModel
+
+
+@{
+    ViewData["Title"] = "Extrato";
+
+    try
+    {
+
+
+    }
+    catch { }
+}
+
+<h2>Extrato</h2>
+
+<div class="container">
+    <form asp-controller="Extrato" asp-action="Extrato">
+        <div class="form-group">
+            <label>Nome Escola:</label>
+            <select asp-for="idEscola" class="form-control">
+                @{
+                    foreach (var item in (List<EscolaModel>)ViewBag.ListaEscola)
+                    {
+                        <option value="@item.idEscola.ToString()">@item.Nome.ToString()</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo</label>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="A" />Água</label></div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="L" />Luz</label></div>
+        </div>
+
+        <div class="form-group">
+            <label>Data(Inicio)</label>
+            <input type="date" asp-for="Data" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Data(Final)</label>
+            <input type="date" asp-for="DataFinal" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-block btn-success">Pesquisar</button>
+    </form>
+</div>
+<br />
+
+<table class="table table-bordered">
+
+    <thead class="btn-primary">
+        <tr>
+            <th>#</th>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+
+    @{
+
+        var Total = 0.0;
+
+        foreach (var item in (List<ExtratoModel>)ViewBag.ListaExtrato)
+        {
+            <tbody>
+                <tr>
+                    <td width="60"><button type="button" class="btn btn-danger" onclick="Excluir(@item.idGasto.ToString())">Excluir</button></td>
+                    <td width="60"><button type="button" class="btn btn-warning" onclick="Editar(@item.idGasto.ToString())">Editar</button></td>
+
+                    <td>@item.Nome.ToString()</td>
+                    <td>@item.Tipo.ToString().Replace("A", "Agua").Replace("L", "Luz")</td>
+                    <td>R$ @item.Valor.ToString()</td>
+                    <td>@item.Data.ToString()</td>
+
+                </tr>
+
+
+                @{
+                    Total += double.Parse(item.Valor.ToString());
+                }
+
+            </tbody>
+
+
+
+        }
+
+    }
+
+</table>
+<h3><strong>Total: </strong>R$ @Total</h3>
+
+

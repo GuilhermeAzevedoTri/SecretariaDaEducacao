@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Contas</h2>
+
+<table class="table table-bordered table-condensed table-striped">
+
+    <thead class="btn-primary">
+        <tr>
+            <th>Excluir</th>
+            <th>Editar</th>
+            <th>Escola</th>
+            <th>Tipo da Conta</th>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+
+    @{
+
+    foreach (var item in (List
+    <ContaModel>
+        )ViewBag.ListaConta)
+        {
+        <tbody>
+            <tr>
+                <td width="60"><button type="button" class="btn btn-danger" onclick="Excluir(@item.idGasto.ToString())">Excluir</button></td>
+                <td width="60"><button type="button" class="btn btn-warning" onclick="Editar(@item.idGasto.ToString())">Editar</button></td>
+                <td>@item.nome.ToString()</td>
+                <td>@item.tipo.ToString().Replace("A", "Agua").Replace("L", "Luz")</td>
+                <td>@item.data.ToString()</td>
+                <td>R$ @item.Valor.ToString()</td>
+                <td>@item.descricao.ToString()</td>
+
+
+            </tr>
+        </tbody>
+
+        }
+
+        }
+
+</table>
+
+<button type="button" class="btn btn-block btn-success" onclick="CriarConta()">Cadastrar Nova Conta</button>
+
+
+<script>
+    function CriarConta() {
+        window.location.href = "../Conta/CriarConta";
+
+    }
+    function Excluir(id_gasto) {
+        window.location.href = "../Conta/ExcluirConta/" + id_gasto;
+    }
+    function Editar(id_gasto) {
+        window.location.href = "../Conta/CriarConta/" + id_gasto;
+
+    }
+</script>
+
+

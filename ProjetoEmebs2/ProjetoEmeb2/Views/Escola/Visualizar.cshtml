@@ -1,0 +1,113 @@
+﻿@{
+    var vNome = "";
+    var vEndereco = "";
+    var vBairro = "";
+    var vNumero = "";
+    var vCep = "";
+    var vId = 0;
+    var vCodAgua = "";
+    var vCodLuz = "";
+    var vTelefone = "";
+    var vTelefone2 = "";
+    var vIP = "";
+    var vEmail = "";
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registro.idEscola.ToString());
+        vNome = @ViewBag.Registro.Nome.ToString();
+        vEndereco = @ViewBag.Registro.Endereco.ToString();
+        vBairro = @ViewBag.Registro.Bairro.ToString();
+        vNumero = @ViewBag.Registro.Numero.ToString();
+        vCep = @ViewBag.Registro.Cep.ToString();
+        vCodAgua = @ViewBag.Registro.CodAgua.ToString();
+        vCodLuz = @ViewBag.Registro.CodLuz.ToString();
+        vTelefone = @ViewBag.Registro.Telefone.ToString();
+        vTelefone2 = @ViewBag.Registro.Telefone2.ToString();
+        vIP = @ViewBag.Registro.IP.ToString();
+        vEmail = @ViewBag.Registro.Email.ToString();
+
+    }
+    catch { }
+
+}
+
+
+<h1 style="text-align:center;">@vNome.ToString()</h1>
+
+
+
+
+<div class="col-md-12">
+    <label>Nome Escola:</label>
+    <input type="text" class="form-control" value="@vNome" disabled="disabled">
+</div>
+
+<div class="col-md-12">
+    <label>Endereco:</label>
+    <input type="text" class="form-control" value="@vEndereco" disabled="disabled">
+</div>
+<div class="col-md-5">
+    <label>Bairro:</label>
+    <input type="text" class="form-control" value="@vBairro" disabled="disabled">
+</div>
+<div class="col-md-3">
+    <label>Numero:</label>
+    <input type="text" class="form-control" value="@vNumero°" disabled="disabled">
+</div>
+<div class="col-md-4">
+    <label>Cep:</label>
+    <input type="text" class="form-control" value="@vCep" disabled="disabled">
+</div>
+<div class="col-md-6">
+    <label>Codigo Agua:</label>
+    <input type="text" class="form-control" value="@vCodAgua" disabled="disabled">
+</div>
+<div class="col-md-6">
+    <label>Codigo Luz:</label>
+    <input type="text" class="form-control" value="@vCodLuz" disabled="disabled">
+</div>
+
+<div class="col-md-6">
+    <label>Codigo Luz:</label>
+    <input type="text" class="form-control" value="@vTelefone" disabled="disabled">
+</div>
+
+<div class="col-md-6">
+    <label>Codigo Luz:</label>
+    <input type="text" class="form-control" value="@vIP" disabled="disabled">
+</div>
+
+<div class="col-md-12">
+    <label>Codigo Luz:</label>
+    <input type="text" class="form-control" value="@vEmail" disabled="disabled">
+</div>
+
+<div class="col-lg-12">
+    <br />
+    <label><strong>CONTATO:</strong></label>
+</div>
+
+<div class="col-md-6">
+    <label>Telefone:</label>
+    <input type="text" class=" form-control" value="@vTelefone" disabled="disabled" />
+
+</div>
+
+<div class="col-md-6">
+    <label>Telefone 2:</label>
+    <input type="text" class=" form-control" value="@vTelefone2" disabled="disabled" />
+
+</div>
+
+<div class="col-md-12">
+    <label>IP:</label>
+    <input type="text" class=" form-control" value="@vIP" disabled="disabled" />
+
+</div>
+
+<div class="col-md-12">
+    <label>Email</label>
+    <input type="text" class=" form-control" value="@vEmail" disabled="disabled" />
+    <br />
+</div>
